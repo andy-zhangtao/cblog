@@ -11,16 +11,7 @@ import (
 var rc restoreConfig
 var rt runtime
 
-func beforeRun() {
-	if *rebuild {
-		clearRC()
-		*wholeDir = true
-	}
-
-}
 func run() error {
-
-	beforeRun()
 
 	var err error
 
@@ -62,7 +53,6 @@ func buildWholeDir() error {
 		return nil
 	})
 
-	fmt.Printf("%#v\n", buildFile)
 	if len(buildFile) > 0 {
 		return batchBuildMarkdownFile(buildFile, *rebuild)
 	}

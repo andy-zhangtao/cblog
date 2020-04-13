@@ -8,12 +8,15 @@ import (
 
 //config 全局配置参数
 type config struct {
-	url  string `toml:"url"`
-	name string `toml:"name"`
+	Url      string `toml:"url"`
+	Name     string `toml:"name"`
+	Summary1 string `toml:"summary1"`
+	Summary2 string `toml:"summary2"`
 }
 
 type restoreConfig struct {
 	Md      metadata   `toml:"-"`
+	Conf    config     `toml:"-"`
 	Docs    []string   `toml:"docs"`
 	History []metadata `toml:"history"`
 }

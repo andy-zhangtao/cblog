@@ -11,6 +11,8 @@ var configPath *string
 var wholeDir *bool
 var rebuild *bool
 var markdownFile *string
+var preview *bool
+var port *int
 
 func cli() {
 	fs := flag.NewFlagSet("cblog", flag.ExitOnError)
@@ -19,6 +21,8 @@ func cli() {
 	wholeDir = fs.Bool("whole-dir", false, "Build whole dir markdown file")
 	rebuild = fs.Bool("rebuild", false, "Force rebuild current dir")
 	markdownFile = fs.String("markdown", "", "The markdown file wants to build")
+	preview = fs.Bool("preview", false, "If true, u can preview blog in localhost")
+	port = fs.Int("port", 80, "Only valid in preview mode")
 
 	fs.Usage = usageFor(fs)
 	fs.Parse(os.Args[1:])

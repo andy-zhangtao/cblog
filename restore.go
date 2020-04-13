@@ -11,6 +11,18 @@ import (
 
 var restartConfigDirPath = fmt.Sprintf("%s/.cblogs", os.Getenv("HOME"))
 var restartConfigPath = fmt.Sprintf("%s/runtime.toml", restartConfigDirPath)
+var globalConfigPath = fmt.Sprintf("%s/cb.toml", restartConfigDirPath)
+
+func beforeRun() {
+	if *rebuild {
+		clearRC()
+		*wholeDir = true
+	}
+
+	if *preview {
+		rc.Conf.Url = fmt.Sprintf("http://localhost:%d", *port)
+	}
+}
 
 func loadRestoreConfig() (restoreConfig, error) {
 
@@ -22,8 +34,23 @@ func loadRestoreConfig() (restoreConfig, error) {
 		return rc, nil
 	}
 	_, err = toml.DecodeFile(restartConfigPath, &rc)
-	return rc, err
+	rc.Conf = loadGlobalConfig()
 
+	beforeRun()
+
+	return rc, err
+}
+
+func loadGlobalConfig() config {
+
+	var cf config
+	_, err := os.Stat(globalConfigPath)
+	if os.IsNotExist(err) {
+		return cf
+	}
+
+	toml.DecodeFile(globalConfigPath, &cf)
+	return cf
 }
 
 func saveRestoreConfig(rc restoreConfig) error {
