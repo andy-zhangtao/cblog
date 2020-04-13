@@ -49,7 +49,21 @@ var indexTPL = `<!doctype html>
                     </li>
                 </ul>
             </div>
+			
             <div class="col-10">
+				{{if .Md.Title}}
+				<div class="row">
+                    <div class="media" style="padding: 3%;">
+                        <img src="{{index .Md.Thumbnail 0}}"
+                            class="mr-3" width="20%">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{.Md.Title}}</h5>
+                            {{.Md.Summary}}
+                        </div>
+                    </div>
+                </div>
+				{{end}}
+				{{ range .History}}
                 <div class="row">
                     <div class="media" style="padding: 3%;">
                         <img src="{{index .Thumbnail 0}}"
@@ -60,7 +74,7 @@ var indexTPL = `<!doctype html>
                         </div>
                     </div>
                 </div>
-
+				{{end}}
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
                         <li class="page-item disabled">

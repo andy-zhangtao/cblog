@@ -9,6 +9,7 @@ import (
 
 var configPath *string
 var wholeDir *bool
+var rebuild *bool
 var markdownFile *string
 
 func cli() {
@@ -16,6 +17,7 @@ func cli() {
 
 	configPath = fs.String("config", "cblog.toml", "The configure file path of cblog")
 	wholeDir = fs.Bool("whole-dir", false, "Build whole dir markdown file")
+	rebuild = fs.Bool("rebuild", false, "Force rebuild current dir")
 	markdownFile = fs.String("markdown", "", "The markdown file wants to build")
 
 	fs.Usage = usageFor(fs)

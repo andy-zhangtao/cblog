@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/BurntSushi/toml"
@@ -13,8 +12,15 @@ type config struct {
 	name string `toml:"name"`
 }
 
-type runConfig struct {
-	docs []string `toml:"docs"`
+type restoreConfig struct {
+	Md      metadata   `toml:"-"`
+	Docs    []string   `toml:"docs"`
+	History []metadata `toml:"history"`
+}
+
+type runtime struct {
+	docs    map[string]bool
+	history map[string]bool
 }
 
 func initConfig() (config, error) {
@@ -36,16 +42,4 @@ func initConfigViaEnv() (config, error) {
 	var c config
 
 	return c, nil
-}
-
-func loadRuntimeConfig() (runConfig, error) {
-
-	var rc runConfig
-
-	if f, err := os.Stat(fmt.Sprintf("%s/.cblogs/runtime.toml", os.Getenv("HOME"))); os.IsExist(err) {
-		_, err = toml.DecodeFile(f.Name(), rc)
-		return rc, err
-	} else {
-		return rc, err
-	}
 }

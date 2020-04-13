@@ -2,11 +2,22 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"crypto/md5"
+	"fmt"
 	"os"
 	"strings"
 
 	"github.com/BurntSushi/toml"
 )
+
+var defaultMetadataMD5 = []byte{
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+}
 
 type metadata struct {
 	Title     string   `toml:"title"`
@@ -48,4 +59,17 @@ func parseMetadata(path string) (md metadata, err error) {
 	err = toml.Unmarshal(tomls, &md)
 
 	return
+}
+
+func calcMetadataMD5(md metadata) string {
+	var b bytes.Buffer
+
+	encode := toml.NewEncoder(&b)
+	err := encode.Encode(md)
+	if err != nil {
+		fmt.Printf("Calc %d md5 error. Use default md5.")
+		return fmt.Sprintf("%x", md5.Sum(defaultMetadataMD5))
+	}
+
+	return fmt.Sprintf("%x", md5.Sum(b.Bytes()))
 }
