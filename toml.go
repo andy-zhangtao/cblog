@@ -26,6 +26,7 @@ type metadata struct {
 	Summary   string   `toml:"summary"`
 	Category  string   `toml:"category"`
 	Tags      []string `toml:"tags"`
+	Href      string   `toml:"href"`
 }
 
 //parseMetadata 从指定的markdown文件中解析元数据
