@@ -8,12 +8,19 @@ import (
 
 //config 全局配置参数
 type config struct {
-	Url      string `toml:"url"`
-	Name     string `toml:"name"`
-	Summary1 string `toml:"summary1"`
-	Summary2 string `toml:"summary2"`
+	Url      string      `toml:"url"`
+	Title    string      `toml:"title"`
+	Summary1 string      `toml:"summary1"`
+	Summary2 string      `toml:"summary2"`
+	Favicon  string      `toml:"favicon"`
+	CDN      cdnProvider `toml:"cdn"`
 }
 
+type cdnProvider struct {
+	AccessKey string `toml:"access"`
+	SecretKey string `toml:"secret"`
+	Bucket    string `toml:"bucket"`
+}
 type restoreConfig struct {
 	Md      metadata   `toml:"-"`
 	Conf    config     `toml:"-"`
@@ -24,6 +31,7 @@ type restoreConfig struct {
 type runtime struct {
 	docs    map[string]bool
 	history map[string]bool
+	upload  []string
 }
 
 func initConfig() (config, error) {

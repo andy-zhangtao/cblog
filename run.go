@@ -91,6 +91,7 @@ func batchBuildMarkdownFile(fileList []string, updateHistory bool) error {
 			return err
 		} else {
 			rc.History[i].Href = hrer
+			rt.upload = append(rt.upload, hrer)
 		}
 
 	}
@@ -116,6 +117,7 @@ func buildMarkdownFile(name string) error {
 	}
 	md.Href = href
 	rc.Md = md
+	rt.upload = append(rt.upload, href)
 
 	//过滤是否存在重复内容。如果存在重复内容，从History剔除掉。否则Index会出现重复数据
 	filterRestoreConfig(name)
@@ -182,7 +184,4 @@ func generateRestoreConfig(name string, md metadata) {
 			rc.History[i] = md
 		}
 	}
-	//if _, exist := rt.history[calcMetadataMD5(md)]; !exist {
-	//	rc.History = append(rc.History, md)
-	//}
 }

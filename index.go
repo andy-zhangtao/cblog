@@ -10,7 +10,7 @@ var htmlTPL = `<!doctype html>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>{{ .Conf.Name }}</title>
+    <title>{{ .Conf.Title }}</title>
     <style type="text/css">
         h1 {
             text-align: center;
@@ -44,7 +44,7 @@ var htmlTPL = `<!doctype html>
 	<div class="container">
         <div class="row">
             <div class="jumbotron col-12 head" style="text-align: center;">
-                <h1 class="display-4">{{.Conf.Name}}</h1>
+                <h1 class="display-4">{{.Conf.Title}}</h1>
                 <p class="lead">{{.Conf.Summary1}}</p>
                 <hr class="my-4">
                 <p>{{.Conf.Summary2}}</p>
@@ -87,18 +87,32 @@ var indexTPL = `<!doctype html>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>{{ .Conf.Name }}</title>
+    <title>{{ .Conf.Title }}</title>
 	<style type="text/css">
         h1 {
             text-align: center;
+            padding-bottom: 5%;
         }
 
-		body {
+        body {
             background: linear-gradient(rgb(245, 245, 213), rgb(245, 245, 220));
         }
 
         .head {
             background: linear-gradient(rgb(245, 245, 213), rgb(245, 245, 220));
+        }
+
+        pre {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border: 1px solid #dee2e6;
         }
     </style>
 </head>
@@ -107,7 +121,7 @@ var indexTPL = `<!doctype html>
     <div class="container">
         <div class="row">
             <div class="jumbotron col-12 head" style="text-align: center;">
-                <h1 class="display-4">{{.Conf.Name}}</h1>
+                <h1 class="display-4">{{.Conf.Title}}</h1>
                 <p class="lead">{{.Conf.Summary1}}</p>
                 <hr class="my-4">
                 <p>{{.Conf.Summary2}}</p>

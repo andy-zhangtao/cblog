@@ -68,6 +68,7 @@ func parseRC(rc restoreConfig) runtime {
 	rt = runtime{
 		docs:    map[string]bool{},
 		history: map[string]bool{},
+		upload:  []string{},
 	}
 
 	for _, d := range rc.Docs {
