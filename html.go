@@ -10,9 +10,10 @@ import (
 
 type html struct {
 	Content string
+	Conf    config
 }
 
-func generateHtml(name string) (string, error) {
+func generateHtml(name string, rc restoreConfig) (string, error) {
 	origiHtml, err := parseMarkdown(name)
 	if err != nil {
 		return "", err
@@ -34,5 +35,5 @@ func generateHtml(name string) (string, error) {
 
 	_t, _ := template.New("html").Parse(htmlTPL)
 
-	return fmt.Sprintf("%s/%x.html", t, _md5), _t.Execute(f, &html{Content: origiHtml})
+	return fmt.Sprintf("%s/%x.html", t, _md5), _t.Execute(f, &html{Content: origiHtml, Conf: rc.Conf})
 }

@@ -10,15 +10,48 @@ var htmlTPL = `<!doctype html>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Hello, world!</title>
+    <title>{{ .Conf.Name }}</title>
     <style type="text/css">
         h1 {
             text-align: center;
+            padding-bottom: 5%;
+        }
+
+        body {
+            background: linear-gradient(rgb(245, 245, 213), rgb(245, 245, 220));
+        }
+
+        .head {
+            background: linear-gradient(rgb(245, 245, 213), rgb(245, 245, 220));
+        }
+
+        pre {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border: 1px solid #dee2e6;
         }
     </style>
 </head>
 
 <body>
+	<div class="container">
+        <div class="row">
+            <div class="jumbotron col-12 head" style="text-align: center;">
+                <h1 class="display-4">{{.Conf.Name}}</h1>
+                <p class="lead">{{.Conf.Summary1}}</p>
+                <hr class="my-4">
+                <p>{{.Conf.Summary2}}</p>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -54,13 +87,26 @@ var indexTPL = `<!doctype html>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>{{ .Conf.Name }}</title>
+	<style type="text/css">
+        h1 {
+            text-align: center;
+        }
+
+		body {
+            background: linear-gradient(rgb(245, 245, 213), rgb(245, 245, 220));
+        }
+
+        .head {
+            background: linear-gradient(rgb(245, 245, 213), rgb(245, 245, 220));
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <div class="row">
-            <div class="jumbotron col-12" style="text-align: center;">
+            <div class="jumbotron col-12 head" style="text-align: center;">
                 <h1 class="display-4">{{.Conf.Name}}</h1>
                 <p class="lead">{{.Conf.Summary1}}</p>
                 <hr class="my-4">
@@ -71,6 +117,7 @@ var indexTPL = `<!doctype html>
     </div>
     <div class="container">
         <div class="row">
+<!--
             <div class="col-2">
                 <ul class="nav flex-column">
                     <li class="nav-item">
@@ -87,9 +134,28 @@ var indexTPL = `<!doctype html>
                     </li>
                 </ul>
             </div>
-			
-            <div class="col-10">
+-->			
+            <div class="col-12">
 				{{if .Md.Title}}
+				<div class="row" style="padding-bottom: 5%;">
+                    <div class="media">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="{{index .Md.Thumbnail 0}}"
+                                    class="mr-3" width="100%">
+                            </div>
+                            <div class="clo-8 offset-1">
+                                <div class="row">
+                                    <h5 class="mt-0"><a href="{{.Href}}">{{.Title}}</a></h5>
+                                </div>
+                                <div class="row">
+                                    {{.Summary}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--
 				<div class="row">
                     <div class="media" style="padding: 3%;">
                         <img src="{{index .Md.Thumbnail 0}}"
@@ -100,15 +166,24 @@ var indexTPL = `<!doctype html>
                         </div>
                     </div>
                 </div>
+-->
 				{{end}}
 				{{ range .History}}
-                <div class="row">
-                    <div class="media" style="padding: 3%;">
-                        <img src="{{index .Thumbnail 0}}"
-                            class="mr-3" width="20%">
-                        <div class="media-body">
-                            <h5 class="mt-0"><a class="nav-link" href="{{.Href}}">{{.Title}}</a></h5>
-                            {{.Summary}}
+                <div class="row" style="padding-bottom: 5%;"> 
+					<div class="media">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="{{index .Thumbnail 0}}"
+                                    class="mr-3" width="100%">
+                            </div>
+                            <div class="clo-8 offset-1">
+                                <div class="row">
+                                    <h5 class="mt-0"><a href="{{.Href}}">{{.Title}}</a></h5>
+                                </div>
+                                <div class="row">
+                                    {{.Summary}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

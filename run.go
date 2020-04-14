@@ -85,7 +85,7 @@ func batchBuildMarkdownFile(fileList []string, updateHistory bool) error {
 	}
 
 	for i, d := range rc.Docs {
-		if hrer, err := generateHtml(d); err != nil {
+		if hrer, err := generateHtml(d, rc); err != nil {
 			return err
 		} else {
 			rc.History[i].Href = hrer
@@ -108,7 +108,7 @@ func buildMarkdownFile(name string) error {
 		return err
 	}
 
-	href, err := generateHtml(name)
+	href, err := generateHtml(name, rc)
 	if err != nil {
 		return err
 	}
