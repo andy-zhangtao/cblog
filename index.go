@@ -146,10 +146,10 @@ var indexTPL = `<!doctype html>
                             </div>
                             <div class="clo-8 offset-1">
                                 <div class="row">
-                                    <h5 class="mt-0"><a href="{{.Href}}">{{.Title}}</a></h5>
+                                    <h5 class="mt-0"><a href="{{.Md.Href}}">{{.Md.Title}}</a></h5>
                                 </div>
                                 <div class="row">
-                                    {{.Summary}}
+                                    {{.Md.Summary}}
                                 </div>
                             </div>
                         </div>

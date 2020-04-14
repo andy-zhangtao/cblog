@@ -43,8 +43,10 @@ func buildWholeDir() error {
 	filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if !info.IsDir() && strings.HasSuffix(info.Name(), ".md") {
 			if *rebuild {
+				//当需要重建整个目录时，直接读取当前所有文件
 				buildFile = append(buildFile, info.Name())
 			} else {
+				//挑选出从来没有构建过的markdown文件
 				if _, exist := rt.docs[info.Name()]; !exist {
 					buildFile = append(buildFile, info.Name())
 				}
@@ -113,9 +115,10 @@ func buildMarkdownFile(name string) error {
 		return err
 	}
 	md.Href = href
-
 	rc.Md = md
 
+	//过滤是否存在重复内容。如果存在重复内容，从History剔除掉。否则Index会出现重复数据
+	filterRestoreConfig(name)
 	err = generateIndex(rc)
 	if err != nil {
 		return err
@@ -141,12 +144,45 @@ func generateIndex(rc restoreConfig) error {
 	return t.Execute(f, &rc)
 }
 
+func filterRestoreConfig(name string) {
+	_, exist := rt.docs[name]
+	if !exist {
+		return
+	}
+	delete(rt.docs, name)
+
+	for i, d := range rc.History {
+		if d.Doc == name {
+			if i == len(rc.History)-1 {
+				rc.History = rc.History[:i]
+				rc.Docs = rc.Docs[:i]
+				return
+			}
+
+			rc.History = append(rc.History[:i], rc.History[i+1:]...)
+			rc.Docs = append(rc.Docs[:i], rc.Docs[i+1:]...)
+			return
+		}
+	}
+}
+
+//generateRestoreConfig 备份当前配置
 func generateRestoreConfig(name string, md metadata) {
-	if _, exist := rt.docs[name]; !exist {
+	//如果当前文件从来没有构建过，直接添加到History。
+	//如果已经构建过，需要替换掉History中的记录
+	_, exist := rt.docs[name]
+	if !exist {
 		rc.Docs = append(rc.Docs, name)
+		rc.History = append(rc.History, md)
+		return
 	}
 
-	if _, exist := rt.history[calcMetadataMD5(md)]; !exist {
-		rc.History = append(rc.History, md)
+	for i, d := range rc.History {
+		if d.Doc == name {
+			rc.History[i] = md
+		}
 	}
+	//if _, exist := rt.history[calcMetadataMD5(md)]; !exist {
+	//	rc.History = append(rc.History, md)
+	//}
 }

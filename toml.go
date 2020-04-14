@@ -27,6 +27,7 @@ type metadata struct {
 	Category  string   `toml:"category"`
 	Tags      []string `toml:"tags"`
 	Href      string   `toml:"href"`
+	Doc       string   `toml:"doc"`
 }
 
 //parseMetadata 从指定的markdown文件中解析元数据
@@ -58,7 +59,7 @@ func parseMetadata(path string) (md metadata, err error) {
 	}
 
 	err = toml.Unmarshal(tomls, &md)
-
+	md.Doc = path
 	return
 }
 
