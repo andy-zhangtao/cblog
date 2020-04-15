@@ -24,6 +24,7 @@ type cdnProvider struct {
 type restoreConfig struct {
 	Md      metadata   `toml:"-"`
 	Conf    config     `toml:"-"`
+	Theme   string     `toml:"theme"`
 	Docs    []string   `toml:"docs"`
 	History []metadata `toml:"history"`
 }

@@ -14,6 +14,7 @@ var markdownFile *string
 var preview *bool
 var port *int
 var setup *bool
+var theme *string
 
 func cli() {
 	fs := flag.NewFlagSet("cblog", flag.ExitOnError)
@@ -25,6 +26,7 @@ func cli() {
 	preview = fs.Bool("preview", false, "If true, u can preview blog in localhost")
 	port = fs.Int("port", 80, "Only valid in preview mode")
 	setup = fs.Bool("init", false, "Init user profile ($HOME/.cblogs/cb.toml)")
+	theme = fs.String("theme", "default", "The blog theme. More theme in https://github.com/cdn-blog/theme")
 
 	fs.Usage = usageFor(fs)
 	fs.Parse(os.Args[1:])

@@ -22,6 +22,10 @@ func run() error {
 
 	rt = parseRC(rc)
 
+	if err := useTheme(*theme); err != nil {
+		return err
+	}
+
 	if *wholeDir {
 		return buildWholeDir()
 	}
