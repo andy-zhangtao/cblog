@@ -52,9 +52,9 @@ func uploadFile2CDN(path string) error {
 func refreshIndex() error {
 	mac := qbox.NewMac(rc.Conf.CDN.AccessKey, rc.Conf.CDN.SecretKey)
 	cdnManager := cdn.NewCdnManager(mac)
-	url := fmt.Sprintf("%s/index.html", rc.Conf.Url)
+	//url := fmt.Sprintf("%s/index.html", rc.Conf.Url)
 	urlsToRefresh := []string{
-		url,
+		rc.Conf.Url,
 	}
 
 	_, err := cdnManager.RefreshUrls(urlsToRefresh)
@@ -62,6 +62,6 @@ func refreshIndex() error {
 		return err
 	}
 
-	fmt.Printf("%s cdn refresh complete \n", url)
+	fmt.Printf("%s cdn refresh complete \n", rc.Conf.Url)
 	return nil
 }
